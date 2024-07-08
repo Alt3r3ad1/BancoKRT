@@ -1,0 +1,37 @@
+﻿@page "{id}"
+@model BancoKRT.Pages.Clients.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete Client";
+}
+
+<h1>Delete Client</h1>
+
+<h4>Are you sure you want to delete this item?</h4>
+<div>
+    <h4>Client</h4>
+    <div>
+        @if (Model.exceptionViewModel != null)
+        {
+            if (Model.exceptionViewModel.message != null)
+            {
+                <div class="alert alert-info">@Model.exceptionViewModel.message</div>
+            }
+        }
+        <dl class="row">
+            <dt class="col-sm-2">CPF</dt>
+            <dd class="col-sm-10">@Model.clientViewModel.CPF</dd>
+            <dt class="col-sm-2">Número Agência</dt>
+            <dd class="col-sm-10">@Model.clientViewModel.Agency</dd>
+            <dt class="col-sm-2">Número Conta</dt>
+            <dd class="col-sm-10">@Model.clientViewModel.Account</dd>
+            <dt class="col-sm-2">Limite - PIX (R$)</dt>
+            <dd class="col-sm-10">R$ @Model.clientViewModel.LimitPIX</dd>
+        </dl>
+    </div>
+
+    <form method="post">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="Index">Cancel</a>
+    </form>
+</div>

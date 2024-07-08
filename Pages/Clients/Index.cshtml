@@ -1,0 +1,40 @@
+﻿@page
+@model BancoKRT.Pages.Clients.IndexModel
+
+@{
+    ViewData["Title"] = "Clients";
+}
+
+<h1>Clients</h1>
+
+<p>
+    <a asp-page="Create">Create New Client</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>CPF</th>
+            <th>Agency</th>
+            <th>Account</th>
+            <th>Limit - PIX (R$)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model.clientViewModel)
+        {
+            <tr>
+                <td>@client.CPF</td>
+                <td>@client.Agency</td>
+                <td>@client.Account</td>
+                <td>R$ @client.LimitPIX</td>
+                <td>
+                    <a asp-page="Edit" asp-route-id="@client.CPF">Edit</a> |
+                    <a asp-page="Details" asp-route-id="@client.CPF">Details</a> |
+                    <a asp-page="Delete" asp-route-id="@client.CPF">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

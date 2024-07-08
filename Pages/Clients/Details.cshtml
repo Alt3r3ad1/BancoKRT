@@ -1,0 +1,57 @@
+﻿@page "{id}"
+@model BancoKRT.Pages.Clients.DetailsModel
+
+@{
+    ViewData["Title"] = "Client Details";
+}
+
+<h1>Client Details</h1>
+
+<div>
+    <h4>Client</h4>
+    <hr />
+    @if (Model.exceptionViewModel != null)
+    {
+        if (Model.exceptionViewModel.message != null)
+        {
+            <div class="alert alert-info">@Model.exceptionViewModel.message</div>
+        }
+    }
+    <dl class="row">
+        <dt class="col-sm-2">
+            CPF
+        </dt>
+        <dd class="col-sm-10">
+            @Model.clientViewModel.CPF
+        </dd>
+        <dt class="col-sm-2">
+            Agency
+        </dt>
+        <dd class="col-sm-10">
+            @Model.clientViewModel.Agency
+        </dd>
+        <dt class="col-sm-2">
+            Account
+        </dt>
+        <dd class="col-sm-10">
+            @Model.clientViewModel.Account
+        </dd>
+        <dt class="col-sm-2">
+            Limit - PIX (R$)
+        </dt>
+        <dd class="col-sm-10">
+            R$ @Model.clientViewModel.LimitPIX
+        </dd>
+        <dt class="col-sm-2">
+            Registration Date
+        </dt>
+        <dd class="col-sm-10">
+            @Model.clientViewModel.RegistrationDate
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-page="Edit" asp-route-id="@Model.clientViewModel.CPF">Edit</a> |
+    <a asp-page="Index">Back to List</a>
+</div>

@@ -1,0 +1,40 @@
+﻿@page
+@model BancoKRT.Pages.PIXs.IndexModel
+
+@{
+    ViewData["Title"] = "PIX";
+}
+
+<h1>PIX</h1>
+
+<p>
+    <a asp-page="Create">Create New PIX</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Client</th>
+            <th>Date</th>
+            <th>Value</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pix in Model.pixViewModel)
+        {
+            <tr>
+                <td>@pix.Id</td>
+                <td>@pix.ClientCPF</td>
+                <td>@pix.Date</td>
+                <td>R$ @pix.Value</td>
+                <td>
+                    @* <a asp-page="Edit" asp-route-id="@pix.Id">Edit</a> |*@
+                    @* <a asp-page="Delete" asp-route-id="@pix.Id">Delete</a> |*@
+                    <a asp-page="Details" asp-route-id="@pix.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
