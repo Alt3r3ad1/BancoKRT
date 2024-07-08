@@ -9,8 +9,8 @@
     <h1 class="display-4">Welcome</h1>
     <p>Choose an option below:</p>
     <p>
-        <a asp-page="/Clients/Index" class="btn btn-secondary">Client registration</a>
-        <a asp-page="/Pixs/Index" class="btn btn-secondary">PIX transfer</a>
+        <a asp-page="@(Model.dataBaseSynchronized ? "/Clients/Index" : "")" id="clientRegistration" class="btn btn-secondary">Client registration</a>
+        <a asp-page="@(Model.dataBaseSynchronized ? "/Pixs/Index" : "")" id="pixTransfer" class="btn btn-secondary">PIX transfer</a>
     </p>
 </div>
 

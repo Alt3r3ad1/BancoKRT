@@ -4,7 +4,6 @@ using BancoKRT.API.Domain.Services.Interfaces;
 using BancoKRT.API.Infrastructure.Repositories.Interfaces;
 using System.Net;
 using BancoKRT.API.Middlewares;
-using System.Globalization;
 
 namespace BancoKRT.API.Domain.Services;
 
@@ -63,7 +62,7 @@ public class PIXService : IPIXService
         }
     }
 
-    public async Task<PIXViewModel?> AddPIXAsync(PIX pix)
+    public async Task<PIXViewModelReturn?> AddPIXAsync(PIX pix)
     {
         try
         {
@@ -71,13 +70,15 @@ public class PIXService : IPIXService
             if (client is not null)
             {
                 var tuple = await _clientService.ChangeLimitClientAsync(pix.ClientCPF, pix.Value);
-                if (string.IsNullOrEmpty(pix.Id))
-                    pix.Id = Guid.NewGuid().ToString();
-
-                pix.Value = Convert.ToDecimal(pix.Value.ToString("0.00", CultureInfo.InvariantCulture));
+                pix.Id = Guid.NewGuid().ToString();
 
                 await _pixRepository.AddAsync(pix);
-                return await GetPIXByIdAsync(pix.Id);
+                return new PIXViewModelReturn
+                {
+                    Id = pix.Id,
+                    PreviousBalance = tuple.Item1,
+                    Balance = tuple.Item2
+                };
             }
             else
             {

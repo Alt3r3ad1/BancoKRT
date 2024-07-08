@@ -13,7 +13,7 @@ public class Client
     [Required(ErrorMessage = "Account number is required.")]
     [Range(1, int.MaxValue, ErrorMessage = "Account number must be valid.")]
     public int Account { get; set; }
-    [Range(0, (double)decimal.MaxValue, ErrorMessage = "Limit cannot be negative.")]
-    public decimal LimitPIX { get; set; }
+    [Range(0, double.MaxValue, ErrorMessage = "Limit cannot be negative.")]
+    public double LimitPIX { get; set; }
     public DateTime RegistrationDate { get; set; }
 }

@@ -88,7 +88,6 @@ public class DynamoDBTableService
         }
         catch (Exception ex)
         {
-            return false;
             throw new HttpException(HttpStatusCode.InternalServerError, $"{ex.Message}");
         }
     }

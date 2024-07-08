@@ -54,34 +54,4 @@ public class PIXController : ControllerBase
             throw (ex is not null ? ex : new HttpException(HttpStatusCode.InternalServerError));
         }
     }
-
-    //[HttpPut]
-    //[Route("[controller]/Edit")]
-    //public async Task<IActionResult> Edit([FromBody] PIX pix, [FromServices] IPIXService _pixService)
-    //{
-    //    try
-    //    {
-    //        var pixResponse = await _pixService.UpdatePIXAsync(pix);
-    //        return new JsonResult(pixResponse);
-    //    }
-    //    catch (HttpException ex)
-    //    {
-    //        throw (ex is not null ? ex : new HttpException(HttpStatusCode.InternalServerError));
-    //    }
-    //}
-
-    //[HttpDelete]
-    //[Route("[controller]/Delete/{id}")]
-    //public async Task<IActionResult> Delete(string id, [FromServices] IPIXService _pixService)
-    //{
-    //    try
-    //    {
-    //        await _pixService.DeletePIXAsync(id);
-    //        return Ok();
-    //    }
-    //    catch (HttpException ex)
-    //    {
-    //        throw (ex is not null ? ex : new HttpException(HttpStatusCode.InternalServerError));
-    //    }
-    //}
 }

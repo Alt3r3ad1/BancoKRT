@@ -4,7 +4,6 @@ using BancoKRT.API.Domain.Services.Interfaces;
 using BancoKRT.API.Infrastructure.Repositories.Interfaces;
 using System.Net;
 using BancoKRT.API.Middlewares;
-using System.Globalization;
 using Amazon.DynamoDBv2.Model;
 
 namespace BancoKRT.API.Domain.Services;
@@ -71,7 +70,6 @@ public class ClientService : IClientService
 
             if (clientDB is null)
             {
-                client.LimitPIX = Convert.ToDecimal(client.LimitPIX.ToString("0.00", CultureInfo.InvariantCulture));
                 await _clientRepository.AddAsync(client);
                 return await GetClientByIdAsync(client.CPF);
             }
@@ -91,7 +89,6 @@ public class ClientService : IClientService
     {
         try
         {
-            clientUpdate.LimitPIX = Convert.ToDecimal(clientUpdate.LimitPIX.ToString("0.00", CultureInfo.InvariantCulture));
             var request = new UpdateItemRequest
             {
                 TableName = "Client",
@@ -101,7 +98,7 @@ public class ClientService : IClientService
             },
                 ExpressionAttributeValues = new Dictionary<string, AttributeValue>
             {
-                { ":newPrice", new AttributeValue { N = clientUpdate.LimitPIX.ToString() } }
+                { ":newPrice", new AttributeValue { N = clientUpdate.LimitPIX.ToString().Replace(",", ".") } }
             },
                 UpdateExpression = "SET LimitPIX = :newPrice"
             };
@@ -128,18 +125,18 @@ public class ClientService : IClientService
         }
     }
 
-    public async Task<Tuple<decimal, decimal>> ChangeLimitClientAsync(string id, decimal valueDecrease)
+    public async Task<Tuple<double, double>> ChangeLimitClientAsync(string id, double valueDecrease)
     {
         var clientViewModel = await GetClientByIdAsync(id);
-        decimal PreviousBalance = Convert.ToDecimal(-1.00);
-        decimal NewBalance = Convert.ToDecimal(-1.00);
+        double PreviousBalance = -1.00;
+        double NewBalance = -1.00;
 
         try
         {
             if (clientViewModel is not null)
             {
                 PreviousBalance = clientViewModel.LimitPIX;
-                NewBalance = clientViewModel.LimitPIX - valueDecrease;
+                NewBalance = Math.Round(clientViewModel.LimitPIX - valueDecrease, 2);
                 if (NewBalance >= 0)
                 {
                     clientViewModel.LimitPIX = NewBalance;

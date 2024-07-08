@@ -14,6 +14,7 @@ namespace BancoKRT.Pages.PIXs
     {
         [BindProperty]
         public PIXViewModel? pixViewModel { get; set; } = new PIXViewModel();
+        public PIXViewModelReturn? pixViewModelReturn { get; set; } = null;
         public ExceptionViewModel? exceptionViewModel { get; private set; }
         public List<SelectListItem>? clients { get; set; }
 
@@ -84,7 +85,8 @@ namespace BancoKRT.Pages.PIXs
 
                         if (response.IsSuccessStatusCode)
                         {
-                            pixViewModel = JsonConvert.DeserializeObject<PIXViewModel>(responseData);
+                            pixViewModelReturn = JsonConvert.DeserializeObject<PIXViewModelReturn>(responseData);
+                            return await OnGetAsync();
                         }
                         else
                         {
@@ -94,8 +96,6 @@ namespace BancoKRT.Pages.PIXs
                         }
                     }
                 }
-
-                return RedirectToPage("Index");
             }
             catch (HttpException ex)
             {

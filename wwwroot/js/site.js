@@ -25,7 +25,13 @@ if (CPF !== null) {
 }
 
 function validatePositiveNumber(input) {
-    if (input.value < 0) {
+    input.value = input.value.replace(/[^0-9.]/g, '');
+
+    if ((input.value.match(/\./g) || []).length > 1) {
+        input.value = input.value.substr(0, input.value.lastIndexOf('.'));
+    }
+
+    if (parseFloat(input.value) < 0) {
         input.value = '';
     }
 }
@@ -33,23 +39,22 @@ function validatePositiveNumber(input) {
 function validatePositiveNumberPaste(event) {
     event.preventDefault();
     const pasteData = event.clipboardData.getData('text');
-    const positiveNumber = pasteData.replace(/[^0-9]/g, '');
-    if (positiveNumber.length > 0) {
+
+    let positiveNumber = pasteData.replace(/[^0-9.]/g, '');
+
+    if ((positiveNumber.match(/\./g) || []).length > 1) {
+        positiveNumber = positiveNumber.substr(0, positiveNumber.lastIndexOf('.'));
+    }
+
+    if (parseFloat(positiveNumber) >= 0) {
         event.target.value = positiveNumber;
     }
 }
 
-function formatValue(input) {
-    let value = input.value.replace(/\D/g, '');
-    value = (parseFloat(value) / 100).toFixed(2);
-    input.value = value.replace(',', '.').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+function formatDecimalInput(input) {
+    if (input.value !== '') {
+        input.value = parseFloat(input.value).toFixed(2);
+    }
 }
 
-function formatValuePaste(event) {
-    event.preventDefault();
-    const pasteData = event.clipboardData.getData('text');
-    const numericData = pasteData.replace(/\D/g, '');
-    const formattedValue = (parseFloat(numericData) / 100).toFixed(2);
-    const finalValue = formattedValue.replace(',', '.').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    event.target.value = finalValue;
-}
+

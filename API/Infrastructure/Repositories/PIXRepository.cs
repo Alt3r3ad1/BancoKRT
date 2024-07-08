@@ -1,4 +1,5 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
 using BancoKRT.API.Domain.Models;
 using BancoKRT.API.Infrastructure.Repositories.Interfaces;
 
@@ -28,5 +29,16 @@ public class PIXRepository : IPIXRepository
     {
         await _context.SaveAsync(pix);
     }
+
+    public async Task<IEnumerable<PIX>?> GetByClientIdAsync(string id)
+    {
+        var conditions = new List<ScanCondition>
+        {
+            new ScanCondition("ClientCPF", ScanOperator.Equal, id)
+        };
+
+        return await _context.ScanAsync<PIX>(conditions).GetRemainingAsync();
+    }
+    
 }
 

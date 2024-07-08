@@ -8,6 +8,8 @@ using BancoKRT.API.Infrastructure.Services;
 using BancoKRT.API.Middlewares;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +26,18 @@ app.Run();
 
 void ConfigureServices(IServiceCollection services, IWebHostEnvironment environment)
 {
+    services.Configure<RequestLocalizationOptions>(options =>
+    {
+        var supportedCultures = new[]
+        {
+            new CultureInfo("en-US"),
+        };
+
+        options.DefaultRequestCulture = new RequestCulture("en-US");
+        options.SupportedCultures = supportedCultures;
+        options.SupportedUICultures = supportedCultures;
+    });
+
     services.AddRazorPages();
     services.AddControllers();
     services.AddSwaggerGen();

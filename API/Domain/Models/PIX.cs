@@ -4,6 +4,6 @@ public class PIX
 {
     public string? Id { get; set; }
     public string ClientCPF { get; set; }
-    public DateTime Date { get; set; }
-    public decimal Value { get; set; }
+    public DateTime? Date { get; set; }
+    public double Value { get; set; }
 }

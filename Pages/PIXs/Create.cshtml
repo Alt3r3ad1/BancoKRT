@@ -17,6 +17,10 @@
             <div class="alert alert-info">@Model.exceptionViewModel.message</div>
         }
     }
+    else if (Model.pixViewModelReturn != null)
+    {
+        <div class="alert alert-info">PIX successfully completed, the current account balance is: R$@Model.pixViewModelReturn.Balance</div>
+    }
     <div class="col-md-4">
         <form method="post">
             <div class="form-group">
@@ -27,11 +31,10 @@
             <div class="form-group">
                 <label asp-for="pixViewModel.Date" class="control-label"></label>
                 <input asp-for="pixViewModel.Date" class="form-control" />
-                <span asp-validation-for="pixViewModel.Date" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="pixViewModel.Value" class="control-label"></label>
-                <input asp-for="pixViewModel.Value" class="form-control" oninput="validatePositiveNumber(this); formatValue(this)" onpaste="validatePositiveNumberPaste(this); formatValuePaste(this)" />
+                <input asp-for="pixViewModel.Value" class="form-control" oninput="validatePositiveNumber(this)" onpaste="validatePositiveNumberPaste(this)" onblur="formatDecimalInput(this)" />
                 <span asp-validation-for="pixViewModel.Value" class="text-danger"></span>
             </div>
             <div class="form-group">

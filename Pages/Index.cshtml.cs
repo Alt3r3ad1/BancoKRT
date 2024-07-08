@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BancoKRT.Pages.Shared;
+using System.Linq.Expressions;
 
 namespace BancoKRT.Pages
 {
@@ -8,6 +9,7 @@ namespace BancoKRT.Pages
     {
         [BindProperty]
         public string? Message { get; set; }
+        public bool dataBaseSynchronized { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
@@ -26,10 +28,12 @@ namespace BancoKRT.Pages
                     if (response.IsSuccessStatusCode)
                     {
                         Message = "Database successfully synchronized.";
+                        dataBaseSynchronized = true;
                     }
                     else
                     {
                         Message = "Database synchronization failure.";
+                        dataBaseSynchronized = false;
                     }
                 }
             }

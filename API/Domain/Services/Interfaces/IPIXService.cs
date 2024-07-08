@@ -7,5 +7,5 @@ public interface IPIXService
 {
     Task<IEnumerable<PIXViewModel>?> GetAllPIXsAsync();
     Task<PIXViewModel?> GetPIXByIdAsync(string id);
-    Task<PIXViewModel?> AddPIXAsync(PIX pix);
+    Task<PIXViewModelReturn?> AddPIXAsync(PIX pix);
 }

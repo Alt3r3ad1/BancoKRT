@@ -10,5 +10,5 @@ public interface IClientService
     Task<ClientViewModel?> AddClientAsync(Client client);
     Task<ClientViewModel?> UpdateClientAsync(ClientUpdate clientUpdate);
     Task DeleteClientAsync(string id);
-    Task<Tuple<decimal, decimal>> ChangeLimitClientAsync(string id, decimal valueDecrease);
+    Task<Tuple<double, double>> ChangeLimitClientAsync(string id, double valueDecrease);
 }
